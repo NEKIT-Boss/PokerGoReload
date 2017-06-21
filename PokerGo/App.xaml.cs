@@ -28,6 +28,7 @@ namespace PokerGo
         protected override void AddAssemblies()
         {
             ContainerConfiguration
+                .WithAssembly(GetAssembly<App>())
                 .WithAssembly(GetAssembly<PokerCoreModule>())
                 .WithAssembly(GetAssembly<CommandingProxyModule>());
         }

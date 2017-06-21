@@ -9,7 +9,10 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind ViewModel.SuccessCounter, Mode=OneWay}"/>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind ViewModel.FailCounter, Mode=OneWay}" 
+                   Foreground="Red"
+                   Margin="0 20 0 0"/>
+    </StackPanel>
 </Page>

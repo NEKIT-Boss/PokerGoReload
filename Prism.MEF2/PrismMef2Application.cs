@@ -189,7 +189,7 @@ namespace Prism.MEF2
 
         #endregion
 
-        protected static Assembly GetAssembly<T>()
+        protected static Assembly GetAssembly<T>() where T: class
         {
             return typeof(T).GetTypeInfo().Assembly;
         }

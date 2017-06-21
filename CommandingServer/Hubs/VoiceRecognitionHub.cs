@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using Infrastructure.Commanding;
+using Infrastructure.Commanding.HubEvents;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 

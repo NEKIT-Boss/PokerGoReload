@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Commanding
+﻿namespace Infrastructure.Commanding.HubEvents
 {
     public interface IVoiceRecognitionEvents
     {

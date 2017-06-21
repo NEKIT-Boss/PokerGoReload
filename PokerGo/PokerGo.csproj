@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DebugLogger.cs" />
+    <Compile Include="Mvvm\DispatcherViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="Views\HomePage.xaml.cs">
@@ -136,6 +138,10 @@
       <Project>{62405ca4-b761-45ab-9b97-ace0cc4b15b7}</Project>
       <Name>CommandingProxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{DFE228C5-91D9-4D40-8E7E-0A59D3C1F5F3}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Poker.Core\Poker.Core.csproj">
       <Project>{F66CCBBC-3E95-4D66-8A65-80505E61C1C0}</Project>
       <Name>Poker.Core</Name>
@@ -146,14 +152,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Reference Include="Prism">
-      <HintPath>..\..\..\..\..\.nuget\packages\Prism.Core\6.3.0\lib\wpa81\Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.Windows">
-      <HintPath>..\..\..\..\..\.nuget\packages\Prism.Windows\6.3.0\lib\uap10.0\Prism.Windows.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\HomePage.xaml">
       <SubType>Designer</SubType>
