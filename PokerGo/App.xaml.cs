@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using CommandingProxy;
@@ -39,9 +40,10 @@ namespace PokerGo
             return Task.CompletedTask;
         }
 
-        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private static void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            throw new System.NotImplementedException();
+            Debug.WriteLine(e.Message);
+            Debugger.Break();
         }
     }
 }
