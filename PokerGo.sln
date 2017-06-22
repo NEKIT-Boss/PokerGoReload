@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerGo", "PokerGo\PokerGo.csproj", "{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandingProxy", "Commandi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker.Core", "Poker.Core\Poker.Core.csproj", "{F66CCBBC-3E95-4D66-8A65-80505E61C1C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DFE228C5-91D9-4D40-8E7E-0A59D3C1F5F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DFE228C5-91D9-4D40-8E7E-0A59D3C1F5F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|Any CPU.Build.0 = Debug|x86
+		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|ARM.Build.0 = Debug|ARM
 		{CE7199B7-8977-43C4-94E8-7723AEA7CE2C}.Debug|ARM.Deploy.0 = Debug|ARM
