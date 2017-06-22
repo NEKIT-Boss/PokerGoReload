@@ -106,7 +106,16 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Flow\BettingRound.cs" />
+    <Compile Include="Flow\Hand.cs" />
+    <Compile Include="Flow\Turn.cs" />
+    <Compile Include="Game\GameConfiguration.cs" />
+    <Compile Include="Game\Loop.cs" />
+    <Compile Include="NamedColor.cs" />
+    <Compile Include="Players\Player.cs" />
+    <Compile Include="Players\PlayersSet.cs" />
     <Compile Include="PokerCoreModule.cs" />
+    <Compile Include="Pot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Poker.Core.rd.xml" />
   </ItemGroup>

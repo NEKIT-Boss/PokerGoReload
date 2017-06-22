@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Commanding.HubProxies
+namespace Infrastructure.Commanding
 {
     public interface ICommandingHub<in TSubscriber> : IDisposable where TSubscriber : class
 
