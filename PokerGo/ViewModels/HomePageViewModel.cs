@@ -1,50 +1,25 @@
-﻿using System.Collections.Generic;
-using Infrastructure.Commanding.HubEvents;
-using Infrastructure.Commanding.HubProxies;
-using PokerGo.Mvvm;
+﻿using System;
+using System.Windows.Input;
+using PokerGo.Views;
+using Prism.Commands;
+using Prism.MEF2.Services;
+using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 
 namespace PokerGo.ViewModels
 {
-    public class HomePageViewModel : DispatcherViewModelBase, ISamplingEvents
+    public class HomePageViewModel : ViewModelBase
     {
-        private readonly ICommandingHub<ISamplingEvents> _samplingHubProxy;
+        private readonly IExtendedNavigationService _navigationService;
 
-        private int _successCounter;
-
-        public int SuccessCounter
+        public HomePageViewModel(IExtendedNavigationService navigationService)
         {
-            get => _successCounter;
-            set => SetProperty(ref _successCounter, value);
+            _navigationService = navigationService;
         }
 
-        private int _failCounter;
-
-        public int FailCounter
+        public void StartGame()
         {
-            get => _failCounter;
-            set => SetProperty(ref _failCounter, value);
-        }
-
-        public HomePageViewModel(ICommandingHub<ISamplingEvents> samplingHubProxy)
-        {
-            _samplingHubProxy = samplingHubProxy;
-        }
-
-        async void ISamplingEvents.RecognitionSucceeded()
-        {
-            await Dispatch(() => SuccessCounter++);
-        }
-
-        async void ISamplingEvents.RecognitionFailed(string errorMessage)
-        {
-            await Dispatch(() => FailCounter++);
-        }
-
-        public override async void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
-        {
-            _samplingHubProxy.AddSubscriber(this);
-            await _samplingHubProxy.Connect();
+            _navigationService.Navigate<GameSetupPage>();
         }
     }
 }

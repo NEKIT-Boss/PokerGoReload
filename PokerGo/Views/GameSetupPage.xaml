@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="PokerGo.Views.GameSetupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PokerGo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="using:Prism.Windows.Mvvm"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Padding="40 20">
+
+        <StackPanel RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <TextBlock FontSize="42" x:Name="PageTitle">
+                <Run Foreground="#B93333">Game</Run>
+                <Run FontWeight="Light">Setup</Run>
+            </TextBlock>
+
+            <StackPanel Margin="0 45 0 0">
+                <TextBlock Text="Initial Chips" FontSize="18" FontWeight="Light"/>
+                <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.InitialChips, Mode=OneWay}"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="0 25 0 0">
+                <TextBlock Text="Ante Amount" FontSize="18" FontWeight="Light"/>
+                <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.AnteAmount, Mode=OneWay}"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="0 25 0 0">
+                <TextBlock Text="Minimal Raise" FontSize="18" FontWeight="Light"/>
+                <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.MinimalRaise, Mode=OneWay}"/>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid RelativePanel.AlignBottomWithPanel="True"
+              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+              Margin="0 0 0 10">
+            <Grid.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource EdgesButtonStyle}"/>    
+            </Grid.Resources>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Content="Cancel" Grid.Column="0" Command="{x:Bind ViewModel.CancelCommand}"/>
+            <Button Content="Next" Grid.Column="2" Background="#B93333" Foreground="White" Command="{x:Bind ViewModel.ContinueCommand}"/>
+        </Grid>
+    </RelativePanel>
+</Page>

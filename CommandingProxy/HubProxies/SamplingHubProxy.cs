@@ -1,7 +1,7 @@
 ﻿using System.Composition;
 using Infrastructure;
+using Infrastructure.Commanding;
 using Infrastructure.Commanding.HubEvents;
-using Infrastructure.Commanding.HubProxies;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace CommandingProxy.HubProxies

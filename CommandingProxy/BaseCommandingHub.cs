@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Infrastructure.Commanding.HubProxies;
+using Infrastructure.Commanding;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace CommandingProxy
@@ -7,7 +7,7 @@ namespace CommandingProxy
     public abstract class BaseCommandingHub<TSubscriber> : ICommandingHub<TSubscriber>
         where TSubscriber: class
     {
-        private const string ConnectionUrl = "http://localhost:60000";
+        private const string ConnectionUrl = "http://172.23.88.21:60000";
 
         protected HubConnection HubConnection { get; }
 

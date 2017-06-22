@@ -9,7 +9,6 @@ namespace PokerGo.Views
         public HomePage()
         {
             InitializeComponent();
-            ViewModel.Dispatcher = Dispatcher;
         }
 
         private HomePageViewModel _viewModel;
