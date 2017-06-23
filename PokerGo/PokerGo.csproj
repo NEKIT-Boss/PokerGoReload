@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ForegroundBrushPicker.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Mvvm\DispatcherViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +122,7 @@
     <Content Include="Assets\CardsLogo.png" />
     <Content Include="Assets\ChipLogo.png" />
     <Content Include="Assets\ColorfulCardsLogo.png" />
+    <Content Include="Assets\SetupLogo.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

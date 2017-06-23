@@ -23,8 +23,8 @@
     extensions:StatusBar.ForegroundColor="White"
     extensions:StatusBar.IsVisible="True"-->
 
-    <RelativePanel Background="White">
-        <Image Width="150" Height="150" Margin="0 75 0 0"
+    <RelativePanel Style="{StaticResource ContainerRelativePanelStyle}">
+        <Image Width="150" Height="150" Margin="0 55 0 0"
                RelativePanel.AlignHorizontalCenterWithPanel="True"
                Stretch="Uniform"
                Source="ms-appx:///Assets/ColorfulCardsLogo.png"
@@ -39,15 +39,16 @@
             <Run Foreground="#B93333" FontWeight="Light">GO</Run>
         </TextBlock>
 
-        <StackPanel RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"
-                    Margin="0 0 0 55" Width="250">
+        <StackPanel RelativePanel.AlignBottomWithPanel="True"
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                    Margin="0 0 0 35">
             <StackPanel.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource EdgesButtonStyle}">
+                <Style TargetType="Button" BasedOn="{StaticResource FlatButtonStyle}">
                     <Setter Property="Margin" Value="0 10 0 0"/>
                 </Style>
             </StackPanel.Resources>
 
-            <Button Content="New Game" Click="{x:Bind ViewModel.StartGame}" Background="#B93333" Foreground="White"/>
+            <Button Style="{StaticResource PrimaryFlatButtonStyle}" Content="New Game" Click="{x:Bind ViewModel.StartGame}"/>
             <Button Content="Load Game"/>
             <Button Content="About" Margin="0 30 0 0"/>
         </StackPanel>

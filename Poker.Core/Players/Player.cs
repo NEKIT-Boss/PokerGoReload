@@ -68,9 +68,10 @@ namespace Poker.Core.Players
             CurrentBet = 0;
         }
 
-        public Player(string name, int chips = 0)
+        public Player(string name, NamedColor color = null, int chips = 0)
         {
             Name = name;
+            Color = color;
             Chips = chips;
         }
     }

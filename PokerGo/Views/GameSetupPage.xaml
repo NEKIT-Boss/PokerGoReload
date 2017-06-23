@@ -9,52 +9,55 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                Padding="40 20">
+    <RelativePanel Style="{StaticResource ContainerRelativePanelStyle}">
 
-        <StackPanel RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-            <TextBlock FontSize="42" x:Name="PageTitle">
-                <Run Foreground="#B93333">Game</Run>
-                <Run FontWeight="Light">Setup</Run>
-            </TextBlock>
+        <TextBlock FontSize="42" x:Name="PageTitle"
+                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <Run Foreground="#B93333">Game</Run>
+            <Run FontWeight="Light">Setup</Run>
+        </TextBlock>
 
+        <Image Width="100" Height="100" Source="ms-appx:///Assets/SetupLogo.png"
+               RelativePanel.Below="PageTitle" RelativePanel.AlignRightWithPanel="True"
+               Margin="0 20 0 0"/>
+
+        <StackPanel RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True">
             <StackPanel Margin="0 45 0 0">
                 <TextBlock Text="Initial Chips" FontSize="18" FontWeight="Light"/>
                 <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
-                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.InitialChips, Mode=OneWay}"/>
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.InitialChips, Mode=OneWay}"
+                             InputScope="Digits"/>
                 </Border>
             </StackPanel>
 
             <StackPanel Margin="0 25 0 0">
                 <TextBlock Text="Ante Amount" FontSize="18" FontWeight="Light"/>
                 <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
-                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.AnteAmount, Mode=OneWay}"/>
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.AnteAmount, Mode=OneWay}"
+                             InputScope="Digits"/>
                 </Border>
             </StackPanel>
 
             <StackPanel Margin="0 25 0 0">
                 <TextBlock Text="Minimal Raise" FontSize="18" FontWeight="Light"/>
                 <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" Margin="0 5 0 0">
-                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.MinimalRaise, Mode=OneWay}"/>
+                    <TextBox BorderThickness="0 2 2 2" Text="{x:Bind ViewModel.Configuration.MinimalRaise, Mode=OneWay}"
+                             InputScope="Digits"/>
                 </Border>
             </StackPanel>
         </StackPanel>
 
-        <Grid RelativePanel.AlignBottomWithPanel="True"
-              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-              Margin="0 0 0 10">
-            <Grid.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource EdgesButtonStyle}"/>    
-            </Grid.Resources>
-            
+        <Grid Style="{StaticResource NavigationGridStyle}">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             
-            <Button Content="Cancel" Grid.Column="0" Command="{x:Bind ViewModel.CancelCommand}"/>
-            <Button Content="Next" Grid.Column="2" Background="#B93333" Foreground="White" Command="{x:Bind ViewModel.ContinueCommand}"/>
+            <Button Style="{StaticResource FlatButtonStyle}" Content="Cancel" Grid.Column="0" Command="{x:Bind ViewModel.CancelCommand}"/>
+            <Button Style="{StaticResource PrimaryFlatButtonStyle}" Content="Next" Grid.Column="2" Command="{x:Bind ViewModel.ContinueCommand}"/>
         </Grid>
     </RelativePanel>
 </Page>

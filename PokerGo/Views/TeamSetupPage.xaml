@@ -7,12 +7,16 @@
     xmlns:prism="using:Prism.Windows.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:players="using:Poker.Core.Players"
+    xmlns:converters="using:PokerGo.Converters"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d"
     x:Name="PageRoot">
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                   Padding="40 20">
+    <Page.Resources>
+        <converters:ForegroundBrushPicker x:Key="ForegroundBrushPicker"/>
+    </Page.Resources>
+
+    <RelativePanel Style="{StaticResource ContainerRelativePanelStyle}">
 
         <StackPanel RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
                     x:Name="PageTitle">
@@ -22,10 +26,25 @@
             </TextBlock>
         </StackPanel>
 
-        <ListView RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
-                  RelativePanel.Below="PageTitle" Margin="0 20 0 0" 
-                  ItemsSource="{x:Bind ViewModel.Players}" Padding="0">
-            
+        <Grid RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+              RelativePanel.Below="PageTitle" Margin="0 60 0 0" x:Name="ListViewHeader">
+            <TextBlock FontSize="22" FontWeight="Light" VerticalAlignment="Bottom">Players</TextBlock>
+            <Border BorderBrush="#B93333" BorderThickness="5 0 0 0" HorizontalAlignment="Right">
+                <Button Style="{StaticResource FlatButtonStyle}" BorderThickness="0 2 2 2"
+                        Command="{x:Bind ViewModel.AddPlayerCommand}">
+                    <StackPanel Orientation="Horizontal" Margin="15 0" >
+                        <TextBlock>Add</TextBlock>
+                        <TextBlock Text="&#xE8FA;" FontFamily="Segoe MDL2 Assets"
+                                   Margin="10 5 0 0"/>
+                    </StackPanel>
+                </Button>
+            </Border>
+        </Grid>
+
+        <ListView ItemsSource="{x:Bind ViewModel.Players}" Padding="0"
+                  RelativePanel.Below="ListViewHeader" RelativePanel.Above="NavigationGrid"
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                  Margin="0 30 0 20">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -37,23 +56,39 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="players:Player">
                     <controls:SlidableListItem
-                        HorizontalAlignment="Stretch"
-                        LeftIcon="Delete"
-                        LeftBackground="Gray"
-                        LeftForeground="White"
-                        IsOffsetLimited="True"
-                        IsLeftCommandEnabled="True"
-                        IsRightCommandEnabled="False"
-                        LeftCommand="{Binding ElementName=PageRoot, Path=DataContext.RemovePlayerCommand}"
-                        LeftCommandParameter="{x:Bind}">
-                        
-                        <Border BorderBrush="{x:Bind Color.Brush}" BorderThickness="5 0 0 0"
-                                Background="#EBEBEB" Padding="20 10 15 10">
-                            <TextBox BorderThickness="0 0 0 1" Background="{x:Null}" Text="{x:Bind Name, Mode=OneWay}"/>
+                            HorizontalAlignment="Stretch"
+                            LeftIcon="Delete"
+                            LeftBackground="{x:Bind Color.Brush}"
+                            LeftForeground="{x:Bind Color.Value, Converter={StaticResource ForegroundBrushPicker}}"
+                            IsOffsetLimited="True"
+                            IsLeftCommandEnabled="True"
+                            IsRightCommandEnabled="False"
+                            LeftCommand="{Binding ElementName=PageRoot, Path=DataContext.RemovePlayerCommand}"
+                            LeftCommandParameter="{x:Bind}">
+
+                        <Border Background="WhiteSmoke" Padding="20 12 15 12"
+                                BorderBrush="{x:Bind Color.Brush, Mode=OneWay}" BorderThickness="5 0 0 0">
+                            <TextBox Style="{StaticResource UnborderedTextBoxStyle}" Text="{x:Bind Name, Mode=OneWay}"
+                                     FontSize="18"/>
                         </Border>
                     </controls:SlidableListItem>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Grid Style="{StaticResource NavigationGridStyle}" x:Name="NavigationGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Content="Back" Style="{StaticResource FlatButtonStyle}"
+                    Command="{x:Bind ViewModel.BackToSettingsCommand}"/>
+            
+            <Button Content="Start" Grid.Column="2" Style="{StaticResource PrimaryFlatButtonStyle}"
+                    Command="{x:Bind ViewModel.StartGameCommand}"/>
+        </Grid>
+        
     </RelativePanel>
 </Page>
