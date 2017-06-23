@@ -96,17 +96,29 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ForegroundBrushPicker.cs" />
+    <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Mvvm\DispatcherViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IGameContext.cs" />
+    <Compile Include="Services\IGameContextManager.cs" />
+    <Compile Include="Services\InMemoryGameContext.cs" />
+    <Compile Include="ViewModels\GameFlowPageViewModel.cs" />
     <Compile Include="ViewModels\GameSetupPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\SetWinnerPageViewModel.cs" />
     <Compile Include="ViewModels\TeamSetupPageViewModel.cs" />
+    <Compile Include="Views\GameFlowPage.xaml.cs">
+      <DependentUpon>GameFlowPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GameSetupPage.xaml.cs">
       <DependentUpon>GameSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SetWinnerPage.xaml.cs">
+      <DependentUpon>SetWinnerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeamSetupPage.xaml.cs">
       <DependentUpon>TeamSetupPage.xaml</DependentUpon>
@@ -172,11 +184,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\GameFlowPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GameSetupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SetWinnerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

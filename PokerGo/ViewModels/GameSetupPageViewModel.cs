@@ -1,17 +1,15 @@
-﻿using System.Windows.Input;
-using Poker.Core.Game;
+﻿using Poker.Core.Game;
+using PokerGo.Services;
 using PokerGo.Views;
 using Prism.Commands;
 using Prism.MEF2.Services;
-using Prism.Windows.AppModel;
 using Prism.Windows.Mvvm;
-using Prism.Windows.Navigation;
 
 namespace PokerGo.ViewModels
 {
     public class GameSetupPageViewModel : ViewModelBase
     {
-        private readonly ISessionStateService _sessionState;
+        private readonly IGameContextManager _gameContextManager;
         private readonly IExtendedNavigationService _navigationService;
 
         public GameConfiguration Configuration { get; } = GameConfiguration.DefaultAnte;
@@ -20,9 +18,9 @@ namespace PokerGo.ViewModels
 
         public DelegateCommand ContinueCommand { get; }
 
-        public GameSetupPageViewModel(ISessionStateService sessionState, IExtendedNavigationService navigationService)
+        public GameSetupPageViewModel(IGameContextManager gameContextManager, IExtendedNavigationService navigationService)
         {
-            _sessionState = sessionState;
+            _gameContextManager = gameContextManager;
             _navigationService = navigationService;
 
             CancelCommand = new DelegateCommand(Cancel);
@@ -33,7 +31,7 @@ namespace PokerGo.ViewModels
 
         private void Continue()
         {
-            _sessionState.SessionState[nameof(GameConfiguration)] = Configuration;
+            _gameContextManager.Configuration = Configuration;
 
             _navigationService.Navigate<TeamSetupPage>();
         }

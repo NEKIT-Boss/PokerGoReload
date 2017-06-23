@@ -110,7 +110,7 @@
     <Compile Include="Flow\Hand.cs" />
     <Compile Include="Flow\Turn.cs" />
     <Compile Include="Game\GameConfiguration.cs" />
-    <Compile Include="Game\Loop.cs" />
+    <Compile Include="Game\Game.cs" />
     <Compile Include="NamedColor.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Players\PlayersSet.cs" />

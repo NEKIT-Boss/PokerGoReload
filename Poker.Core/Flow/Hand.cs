@@ -13,7 +13,7 @@ namespace Poker.Core.Flow
         /// <summary>
         /// The game, associated with this hand
         /// </summary>
-        private Game.Loop CurrentLoop { get; }
+        private Game.Game CurrentGame { get; }
 
         /// <summary>
         /// Pot for this particular game
@@ -76,9 +76,9 @@ namespace Poker.Core.Flow
             }
         }
 
-        public Hand(Game.Loop loop, PlayersSet table)
+        public Hand(Game.Game game, PlayersSet table)
         {
-            CurrentLoop = loop;
+            CurrentGame = game;
 
             Pot = new Pot();
             Table = table;

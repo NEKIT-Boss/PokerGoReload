@@ -1,0 +1,209 @@
+﻿<Page
+    x:Class="PokerGo.Views.GameFlowPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PokerGo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:PokerGo.Converters"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:prism="using:Prism.Windows.Mvvm"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    
+    extensions:StatusBar.IsVisible="False"
+    
+    mc:Ignorable="d"
+    Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}">
+
+    <Page.Resources>
+        <converters:ForegroundBrushPicker x:Key="ForegroundBrushPicker"/>
+
+        <converters:ValueWhenConverter x:Key="BoolToHiddenConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
+
+        <converters:ValueWhenConverter x:Key="BoolToVisibilityConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
+    </Page.Resources>
+
+    <RelativePanel Style="{StaticResource ContainerRelativePanelStyle}" Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}">
+        <TextBlock Text="{x:Bind ViewModel.CurrentBettingRound.Name, Mode=OneWay}"
+                   RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+                   Style="{ThemeResource TitleTextBlockStyle}" x:Name="RoundName"/>
+
+        <StackPanel RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
+            <TextBlock Text="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Name, Mode=OneWay}"
+                       FontSize="34" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock FontSize="26" TextAlignment="Center"
+                       Margin="0 10 0 0" HorizontalAlignment="Center">
+                <Run Text="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Chips, Mode=OneWay}"/>
+                <Run>$</Run>
+                <Run FontSize="34">/</Run>
+                <Run Text="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.CurrentBet, Mode=OneWay}"/>
+                <Run>$</Run>
+            </TextBlock>
+        </StackPanel>
+
+        <Grid RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+            <Grid.Resources>
+                <Style x:Key="GameActionButtonStyle" TargetType="Button" BasedOn="{StaticResource CircleButtonStyle}">
+                    <Setter Property="Background" Value="WhiteSmoke"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Style="{StaticResource GameActionButtonStyle}"
+                    Width="95" Height="95" HorizontalAlignment="Center"
+                    Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                    Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}">
+                <Viewbox Width="35" Height="35">
+                    <StackPanel>
+                        <SymbolIcon Symbol="Microphone"/>
+                    </StackPanel>
+                </Viewbox>
+            </Button>
+
+            <Grid Grid.Row="1" Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource GameActionButtonStyle}"
+                        Width="60" Height="60"
+                        Click="OpenAttachedFlyout"
+                        Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                        Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}"
+                        Visibility="{x:Bind ViewModel.CurrentBettingRound.IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                        ToolTipService.ToolTip="Raise by">
+                    <Viewbox Width="20" Height="20">
+                        <SymbolIcon Symbol="Up"/>
+                    </Viewbox>
+
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout LightDismissOverlayMode="On" x:Name="RaiseFlyout">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0" InputScope="Digits" MaxLength="5" Text="{x:Bind ViewModel.RaiseAmount, Mode=TwoWay}"/>
+                                <Button Grid.Column="1" Content="OK" x:Name="RaiseButton"
+                                        Click="{x:Bind ViewModel.Raise}"/>
+                            </Grid>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </Button>
+
+                <Button Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                        Style="{StaticResource GameActionButtonStyle}"
+                        Width="60" Height="60"
+                        Click="OpenAttachedFlyout"
+                        Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                        Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}"
+                        Visibility="{x:Bind ViewModel.CurrentBettingRound.IsOpened, Mode=OneWay, Converter={StaticResource BoolToHiddenConverter}}"
+                        ToolTipService.ToolTip="Bet">
+                    <Viewbox Width="20" Height="20">
+                        <SymbolIcon Symbol="Up"/>
+                    </Viewbox>
+
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout LightDismissOverlayMode="On" x:Name="BetFlyout">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0" InputScope="Digits" MaxLength="5" Text="{x:Bind ViewModel.BetAmount, Mode=TwoWay}"/>
+                                <Button Grid.Column="1" Content="OK" x:Name="BetButton"
+                                        Click="{x:Bind ViewModel.Bet}"/>
+                            </Grid>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </Button>
+
+                <Button Grid.Column="2" Style="{StaticResource GameActionButtonStyle}"
+                        Width="60" Height="60" Click="{x:Bind ViewModel.Call}"
+                        Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                        Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}"
+                        Visibility="{x:Bind ViewModel.CurrentBettingRound.IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                        ToolTipService.ToolTip="Call"
+                        Margin="0 35 0 0">
+                    <Viewbox Width="20" Height="20">
+                        <SymbolIcon Symbol="Accept"/>
+                    </Viewbox>
+                </Button>
+
+                <Button Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                        Style="{StaticResource GameActionButtonStyle}"
+                        Width="60" Height="60" 
+                        Click="{x:Bind ViewModel.Check}"
+                        Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                        Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}"
+                        Visibility="{x:Bind ViewModel.CurrentBettingRound.IsOpened, Mode=OneWay, Converter={StaticResource BoolToHiddenConverter}}"
+                        ToolTipService.ToolTip="Check">
+                    <Viewbox Width="20" Height="20">
+                        <SymbolIcon Symbol="Accept"/>
+                    </Viewbox>
+                </Button>
+
+                <Button Grid.Column="4" Style="{StaticResource GameActionButtonStyle}"
+                        Width="60" Height="60" Click="{x:Bind ViewModel.Fold}"
+                        Foreground="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Brush, Mode=OneWay}"
+                        Background="{x:Bind ViewModel.CurrentTurn.CurrentPlayer.Color.Value, Mode=OneWay, Converter={StaticResource ForegroundBrushPicker}}"
+                        Visibility="{x:Bind ViewModel.CurrentBettingRound.IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                        ToolTipService.ToolTip="Fold">
+                    <Viewbox Width="20" Height="20">
+                        <SymbolIcon Symbol="Cancel"/>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal"
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="RoundName"
+                    Margin="15 15 0 10">
+            <TextBlock FontSize="20">
+                <Run>Pot: </Run>
+                <Run Text="{x:Bind ViewModel.CurrentHand.Pot.Chips, Mode=OneWay}"/>
+                <Run>$</Run>
+            </TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="RoundName"
+                    Margin="0 15 15 10">
+            <TextBlock FontSize="20">
+                <Run>Current Bet: </Run>
+                <Run Text="{x:Bind ViewModel.CurrentHand.CurrentBet, Mode=OneWay}"/>
+                <Run>$</Run>
+            </TextBlock>
+        </StackPanel>
+        
+    </RelativePanel>
+</Page>

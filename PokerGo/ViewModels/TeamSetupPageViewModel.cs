@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Poker.Core;
+using Poker.Core.Game;
 using Poker.Core.Players;
+using PokerGo.Services;
+using PokerGo.Views;
 using Prism.Commands;
 using Prism.MEF2.Services;
+using Prism.Windows.AppModel;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 
@@ -13,6 +17,8 @@ namespace PokerGo.ViewModels
     public class TeamSetupPageViewModel : ViewModelBase
     {
         private readonly Random _random = new Random();
+        private readonly IGameContextManager _gameContextManager;
+
         private readonly IExtendedNavigationService _navigationService;
 
         public ObservableCollection<Player> Players { get; }
@@ -25,9 +31,10 @@ namespace PokerGo.ViewModels
         public DelegateCommand BackToSettingsCommand { get; }
         public DelegateCommand StartGameCommand { get; }
 
-        public TeamSetupPageViewModel(IExtendedNavigationService navigationService)
+        public TeamSetupPageViewModel(IExtendedNavigationService navigationService, IGameContextManager gameContextManager)
         {
             _navigationService = navigationService;
+            _gameContextManager = gameContextManager;
 
             Players = new ObservableCollection<Player>();
 
@@ -59,7 +66,9 @@ namespace PokerGo.ViewModels
 
         private void StartGame()
         {
-            //_navigationService.Navigate<GameFlowPage>();
+            _gameContextManager.Players = Players;
+
+            _navigationService.Navigate<GameFlowPage>();
         }
 
         private void BackToSettings()
