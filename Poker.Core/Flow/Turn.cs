@@ -5,11 +5,11 @@ namespace Poker.Core.Flow
 {
     public class Turn
     {
-        public Player CurrentPlayer { get; }
+        public InGamePlayer CurrentPlayer { get; }
 
         private BettingRound CurrentBettingRound { get; }
 
-        public Turn(BettingRound currentBettingRound, Player player)
+        public Turn(BettingRound currentBettingRound, InGamePlayer player)
         {
             CurrentPlayer = player;
             CurrentBettingRound = currentBettingRound;
@@ -29,16 +29,14 @@ namespace Poker.Core.Flow
             if (!CurrentBettingRound.IsOpened) throw new InvalidOperationException("Can not call while round is not opened!");
 
             
-            CurrentPlayer.Bet(
-                CurrentBettingRound.CurrentBet - CurrentPlayer.CurrentBet,
-                CurrentBettingRound.Pot);
+            CurrentPlayer.Bet(CurrentBettingRound.CurrentBet - CurrentPlayer.CurrentBet);
         }
 
         public void Bet(int amount)
         {
             if (CurrentBettingRound.IsOpened) throw new InvalidOperationException();
 
-            CurrentPlayer.Bet(amount, CurrentBettingRound.Pot);
+            CurrentPlayer.Bet(amount);
 
             CurrentBettingRound.CurrentBet += amount;
             CurrentBettingRound.IsOpened = true;
@@ -48,9 +46,7 @@ namespace Poker.Core.Flow
         {
             if (!CurrentBettingRound.IsOpened) throw new InvalidOperationException();
 
-            CurrentPlayer.Bet(
-                CurrentBettingRound.CurrentBet - CurrentPlayer.CurrentBet + amount,
-                CurrentBettingRound.Pot);
+            CurrentPlayer.Bet(CurrentBettingRound.CurrentBet - CurrentPlayer.CurrentBet + amount);
 
             CurrentBettingRound.CurrentBet += amount;
         }
@@ -60,16 +56,13 @@ namespace Poker.Core.Flow
             if (!CurrentBettingRound.IsOpened) throw new InvalidOperationException();
             if (CurrentBettingRound.CurrentBet >= bet) throw new InvalidOperationException();
 
-            CurrentPlayer.Bet(
-                bet - CurrentBettingRound.CurrentBet,
-                CurrentBettingRound.Pot);
+            CurrentPlayer.Bet(bet - CurrentBettingRound.CurrentBet);
 
             CurrentBettingRound.CurrentBet = bet;
         }
 
         public void Fold()
         {
-            // Here is some problem
             CurrentPlayer.Fold();
         }
 

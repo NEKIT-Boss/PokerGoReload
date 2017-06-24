@@ -33,22 +33,15 @@ namespace Poker.Core.Game
 
             InGamePlayers = new List<Player>(Players);
 
-            // Paying the players :)
             Players.ForEach(x => x.Chips = Configuration.InitialChips);
             _handsEnumerator = Hands.GetEnumerator();
         }
 
         private PlayersSet PreparePlayers()
         {
-            foreach (var player in InGamePlayers)
-            {
-                player.Reset();
-
-                if (player.Chips <= Configuration.AnteAmount)
-                    player.GoBankrupt();
-            }
-
-            InGamePlayers.RemoveAll(x => x.IsBankrupt);
+            // TODO better implement event aggragation here, than manually remove players out of table.
+            // TODO FIX BANKRUPCY PROBLEM
+            InGamePlayers.RemoveAll(x => x.Chips <= Configuration.AnteAmount);
             return new PlayersSet(InGamePlayers);
         }
 
@@ -57,15 +50,13 @@ namespace Poker.Core.Game
         {
             get
             {
-                // I'm almost sure, that managing the FirstBets here is right, otherwise we need to subclass 
-                // hands, that will result in subclassing the game AND the hand, not the best option from the first sight
                 PlayersSet table;
                 while ((table = PreparePlayers()).IsPlaying)
                 {
                     // There is some problem with setting the initial bet.
                     var nextHand = new Hand(this, table);
                     
-                    table.ChargeAll(Configuration.AnteAmount, nextHand.Pot);
+                    table.ChargeAll(Configuration.AnteAmount);
                     nextHand.CurrentBet = Configuration.AnteAmount;
 
                     yield return nextHand;

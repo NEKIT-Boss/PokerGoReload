@@ -4,4 +4,10 @@
     <TargetFramework>netstandard1.4</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Prism">
+      <HintPath>..\..\..\..\..\.nuget\packages\Prism.Core\6.3.0\lib\wpa81\Prism.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using System.Collections.Generic;
+using Poker.Core.Players;
+using Prism.Mvvm;
 
 namespace Poker.Core
 {
@@ -27,16 +29,18 @@ namespace Poker.Core
             Chips += chips;
         }
 
-        /// <summary>
-        /// Disposes all of the chips of the pot and also could then log it,
-        /// make the records, whatever.
-        /// </summary>
-        /// <returns>All the chips in the pot!</returns>
-        public int Clear()
+        public void Clear(IReadOnlyCollection<InGamePlayer> winners)
         {
-            int chips = Chips;
-            Chips = 0;
-            return chips;
+            int chipsEach = Chips / winners.Count;
+            foreach (var player in winners)
+            {
+                player.Chips += chipsEach;
+            }
+        }
+
+        public void Clear(InGamePlayer winner)
+        {
+            winner.Chips += Chips;
         }
     }
 }

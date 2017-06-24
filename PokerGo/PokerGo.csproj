@@ -103,10 +103,11 @@
     <Compile Include="Services\IGameContext.cs" />
     <Compile Include="Services\IGameContextManager.cs" />
     <Compile Include="Services\InMemoryGameContext.cs" />
+    <Compile Include="Services\VoiceRecognitionService.cs" />
     <Compile Include="ViewModels\GameFlowPageViewModel.cs" />
     <Compile Include="ViewModels\GameSetupPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
-    <Compile Include="ViewModels\SetWinnerPageViewModel.cs" />
+    <Compile Include="ViewModels\SetWinnerContentDialogViewModel.cs" />
     <Compile Include="ViewModels\TeamSetupPageViewModel.cs" />
     <Compile Include="Views\GameFlowPage.xaml.cs">
       <DependentUpon>GameFlowPage.xaml</DependentUpon>
@@ -117,8 +118,8 @@
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetWinnerPage.xaml.cs">
-      <DependentUpon>SetWinnerPage.xaml</DependentUpon>
+    <Compile Include="Views\SetWinnerContentDialog.xaml.cs">
+      <DependentUpon>SetWinnerContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeamSetupPage.xaml.cs">
       <DependentUpon>TeamSetupPage.xaml</DependentUpon>
@@ -135,6 +136,9 @@
     <Content Include="Assets\ChipLogo.png" />
     <Content Include="Assets\ColorfulCardsLogo.png" />
     <Content Include="Assets\SetupLogo.png" />
+    <Content Include="PokerGoGrammar.grxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -196,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SetWinnerPage.xaml">
+    <Page Include="Views\SetWinnerContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

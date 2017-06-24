@@ -14,11 +14,6 @@ namespace Poker.Core.Flow
         public string Name { get; }
 
         /// <summary>
-        /// Proxying out the pot of the current hand.
-        /// </summary>
-        public Pot Pot => CurrentHand.Pot;
-
-        /// <summary>
         /// Proxying out the current bet of the hand.
         /// </summary>
         public int CurrentBet
@@ -43,8 +38,8 @@ namespace Poker.Core.Flow
 
         private IEnumerable<Turn> CyclePlayers()
         {
-            return CurrentHand.Table
-                .Select(player => new Turn(this, player));
+            return (CurrentHand.Table
+                .Select(player => new Turn(this, player))).ToArray();
         }
 
         private readonly IEnumerator<Turn> _turnsEnumerator;
@@ -64,7 +59,7 @@ namespace Poker.Core.Flow
                 {
                     foreach (var turn in CyclePlayers())
                     {
-                        if (!CurrentHand.Table.IsPlaying) yield break;
+                        if (!CurrentHand.Table.IsPlaying || CurrentHand.IsEquallyBet) yield break;
 
                         yield return turn;
                     }

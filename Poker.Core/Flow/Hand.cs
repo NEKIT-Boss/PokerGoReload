@@ -16,11 +16,6 @@ namespace Poker.Core.Flow
         private Game.Game CurrentGame { get; }
 
         /// <summary>
-        /// Pot for this particular game
-        /// </summary>
-        public Pot Pot { get; }
-
-        /// <summary>
         /// Players, effectively returning them one by one
         /// </summary>
         public PlayersSet Table { get; }
@@ -43,15 +38,6 @@ namespace Poker.Core.Flow
         {
             bool moved = _bettingRoundsEnumerator.MoveNext();
             return moved ? _bettingRoundsEnumerator.Current : null;
-        }
-
-        /// <summary>
-        /// Finishes the hand, for now it only clears the pot, and adds chips to the winner
-        /// </summary>
-        /// <param name="winner"></param>
-        public void SetWinner(Player winner)
-        {
-            winner.Chips += Pot.Clear();
         }
 
         private static readonly IReadOnlyCollection<string> RoundNames = new []
@@ -79,8 +65,6 @@ namespace Poker.Core.Flow
         public Hand(Game.Game game, PlayersSet table)
         {
             CurrentGame = game;
-
-            Pot = new Pot();
             Table = table;
 
             _bettingRoundsEnumerator = BettingRounds.GetEnumerator();

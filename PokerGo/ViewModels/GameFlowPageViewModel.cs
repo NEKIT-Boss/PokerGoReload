@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
+﻿using System.Linq;
 using Poker.Core.Flow;
 using Poker.Core.Game;
 using Poker.Core.Players;
 using PokerGo.Services;
+using PokerGo.Views;
+using Prism.MEF2.Services;
 using Prism.Windows.AppModel;
 using Prism.Windows.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Prism.Windows.Navigation;
 
 namespace PokerGo.ViewModels
 {
     public class GameFlowPageViewModel : ViewModelBase
     {
+        private readonly IExtendedNavigationService _navigationService;
+        private readonly VoiceRecognitionService _recognition;
+
         private Game _game;
         public Game Game
         {
@@ -59,14 +65,31 @@ namespace PokerGo.ViewModels
             set => SetProperty(ref _raiseAmount, value);
         }
 
+        private async Task SetWinners()
+        {
+            var viewModel = new SetWinnerContentDialogViewModel(_navigationService, CurrentHand.Table);
+            await new SetWinnerContentDialog(viewModel).ShowAsync();
+        }
+
         #endregion
 
-        public GameFlowPageViewModel(IGameContextManager gameContextManager)
+        public GameFlowPageViewModel(IGameContextManager gameContextManager,
+            IExtendedNavigationService navigationService)
         {
+            _navigationService = navigationService;
+
             gameContextManager.CurrentGame = Game =
                 new Game(gameContextManager.Players, gameContextManager.Configuration);
 
+            _recognition = new VoiceRecognitionService();
+
             StartGame();
+        }
+
+        public override async void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
+        {
+            _navigationService.ClearHistory();
+            await _recognition.Configure();
         }
 
         private void StartGame()
@@ -77,6 +100,11 @@ namespace PokerGo.ViewModels
 
             BetAmount = Game.Configuration.MinimalRaise;
             RaiseAmount = Game.Configuration.MinimalRaise;
+        }
+
+        public async void StartRecognizing()
+        {
+            await _recognition.Enable();
         }
 
         #region GameActions
@@ -139,8 +167,11 @@ namespace PokerGo.ViewModels
             return true;
         }
 
-        private bool AdvanceHand()
+        private async Task<bool> AdvanceHand()
         {
+            if (CurrentHand.Table.Players.Count > 1) await SetWinners();
+            else CurrentHand.Table.Pot.Clear(CurrentHand.Table.Players.First());
+
             var nextHand = Game.NextHand();
 
             if (nextHand == null) return false;
@@ -149,17 +180,17 @@ namespace PokerGo.ViewModels
             return true;
         }
 
-        private void AdvanceFlow()
+        private async void AdvanceFlow()
         {
             if (!AdvanceTurn())
             {
                 if (!AdvanceBettingRound())
                 {
-                    if (!AdvanceHand())
+                    if (!(await AdvanceHand()))
                     {
                         // Win the game here
                     }
-                    // Mark the winner
+
                     AdvanceBettingRound();
                 }
                 AdvanceTurn();
